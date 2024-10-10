@@ -1,6 +1,5 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
@@ -16,23 +15,19 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import Link from "next/link";
+import { loginSchema } from "../schemas";
 
 interface FormData {
 	email: string;
 	password: string;
 }
-
-const formSchema = z.object({
-	email: z.string().email(),
-	password: z.string().min(1, "Required"),
-});
 const SignInCard = () => {
 	const form = useForm<FormData>({
 		defaultValues: {
 			email: "",
 			password: "",
 		},
-		resolver: zodResolver(formSchema),
+		resolver: zodResolver(loginSchema),
 	});
 
 	const onSubmit = (values: FormData): void => {
